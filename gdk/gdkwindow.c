@@ -478,7 +478,17 @@ gdk_window_new (GdkWindow     *parent,
                       title, title,
                       NULL, 0,
                       NULL, NULL, NULL);
-  
+  //tinyX11 hack
+  XTextProperty wname, iname;
+  if (XStringListToTextProperty(& title, 1, & wname) == 0)
+		printf ("failed to set window name structure");
+		
+  if (XStringListToTextProperty(& title, 1, & iname) == 0)
+		printf ("failed to set icon name structure");
+		
+  XSetWMName(private->xdisplay, private->xwindow, &wname);
+  XSetWMIconName(private->xdisplay, private->xwindow, &iname);
+  //          
   if (attributes_mask & GDK_WA_WMCLASS)
     {
       class_hint = XAllocClassHint ();
@@ -1186,6 +1196,18 @@ gdk_window_set_title (GdkWindow   *window,
   if (!private->destroyed)
     XmbSetWMProperties (private->xdisplay, private->xwindow,
 			title, title, NULL, 0, NULL, NULL, NULL);
+  
+  //tinyX11 hack
+  XTextProperty wname, iname;
+  if (XStringListToTextProperty(& title, 1, & wname) == 0)
+		printf ("failed to set window name structure");
+		
+  if (XStringListToTextProperty(& title, 1, & iname) == 0)
+	printf ("failed to set icon name structure");
+		
+  XSetWMName(private->xdisplay, private->xwindow, &wname);
+  XSetWMIconName(private->xdisplay, private->xwindow, &iname);
+  //	
 }
 
 void          
@@ -2083,14 +2105,29 @@ gdk_window_set_icon_name (GdkWindow   *window,
   if (res < 0)
     {
       g_warning ("Error converting icon name to text property: %d\n", res);
-      return;
+      //return;	//tinyX11 hack
     }
-  
-  XSetWMIconName (window_private->xdisplay, window_private->xwindow,
+	//tinyX11 hack
+	XTextProperty iname;
+ 
+	if (XStringListToTextProperty(& name, 1, & iname) == 0) {
+		printf ("failed to set icon name structure\n");
+	} else {
+		XSetWMIconName (window_private->xdisplay, window_private->xwindow,
+		  &iname);
+		printf ("but succeded to do it anyway...\n");
+  	}
+	
+	if (iname.value)
+    	XFree (iname.value);
+	//	
+ 	   
+ /* XSetWMIconName (window_private->xdisplay, window_private->xwindow,
 		  &property);
   
   if (property.value)
     XFree (property.value);
+ */
 }
 
 void          

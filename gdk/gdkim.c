@@ -106,18 +106,18 @@ gdk_set_locale (void)
   gchar *current_locale;
 
   gdk_use_mb = FALSE;
-
+  if (! strcmp (setlocale (LC_ALL, NULL), "C.UTF-8")) {return; } //musl fix
   if (!setlocale (LC_ALL,""))
     g_warning ("locale not supported by C library");
   
   if (!XSupportsLocale ())
     {
-      g_warning ("locale not supported by Xlib, locale set to C");
+      /*g_warning ("locale not supported by Xlib, locale set to C");*/
       setlocale (LC_ALL, "C");
     }
   
-  if (!XSetLocaleModifiers (""))
-    g_warning ("can not set locale modifiers");
+  /*if (!XSetLocaleModifiers (""))
+    g_warning ("can not set locale modifiers");*/
 
   current_locale = setlocale (LC_ALL, NULL);
 

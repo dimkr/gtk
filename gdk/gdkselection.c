@@ -327,9 +327,9 @@ gdk_string_to_compound_text (const gchar *str,
       property.value = NULL;
       property.nitems = 0;
     }
-
+#if 0	//musl fix or tinyxlib fixme...
   g_assert (property.encoding == gdk_atom_intern ("COMPOUND_TEXT", FALSE) && property.format == 8);
-
+#endif
   if (encoding)
     *encoding = property.encoding;
   if (format)
