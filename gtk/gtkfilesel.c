@@ -2080,8 +2080,7 @@ check_dir(gchar *dir_name, struct stat *result, gboolean *stat_subdirs)
     gboolean present;
     struct stat statbuf;
   } no_stat_dirs[] = {
-    { "/afs", FALSE, { 0 } },
-    { "/net", FALSE, { 0 } }
+    { "/sys", FALSE, { 0 } },
   };
 
   static const gint n_no_stat_dirs = sizeof(no_stat_dirs) / sizeof(no_stat_dirs[0]);
