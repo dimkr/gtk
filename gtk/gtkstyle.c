@@ -320,17 +320,24 @@ static const GtkStyleClass default_class =
 };
 GdkFont *default_font = NULL;
 
-static GdkColor gtk_default_normal_fg =      { 0,      0,      0,      0 };
-static GdkColor gtk_default_active_fg =      { 0,      0,      0,      0 };
-static GdkColor gtk_default_prelight_fg =    { 0,      0,      0,      0 };
-static GdkColor gtk_default_selected_fg =    { 0, 0xffff, 0xffff, 0xffff };
-static GdkColor gtk_default_insensitive_fg = { 0, 0x7530, 0x7530, 0x7530 };
+#define GTK_GRAY		0xdcdc, 0xdada, 0xd5d5
+#define GTK_DARK_GRAY		0xc4c4, 0xc2c2, 0xbdbd
+#define GTK_WHITE		0xffff, 0xffff, 0xffff
+#define GTK_BLUE		0x4b4b, 0x6969, 0x8383
+#define GTK_BLACK		0x0000, 0x0000, 0x0000
+#define GTK_WEAK_GRAY		0x7530, 0x7530, 0x7530
 
-static GdkColor gtk_default_normal_bg =      { 0, 0xd6d6, 0xd6d6, 0xd6d6 };
-static GdkColor gtk_default_active_bg =      { 0, 0xc350, 0xc350, 0xc350 };
-static GdkColor gtk_default_prelight_bg =    { 0, 0xea60, 0xea60, 0xea60 };
-static GdkColor gtk_default_selected_bg =    { 0,      0,      0, 0x9c40 };
-static GdkColor gtk_default_insensitive_bg = { 0, 0xd6d6, 0xd6d6, 0xd6d6 };
+static GdkColor gtk_default_normal_fg =      { 0, GTK_BLACK };
+static GdkColor gtk_default_active_fg =      { 0, GTK_BLACK };
+static GdkColor gtk_default_prelight_fg =    { 0, GTK_WHITE };
+static GdkColor gtk_default_selected_fg =    { 0, GTK_WHITE };
+static GdkColor gtk_default_insensitive_fg = { 0, GTK_WEAK_GRAY };
+
+static GdkColor gtk_default_normal_bg =      { 0, GTK_GRAY };
+static GdkColor gtk_default_active_bg =      { 0, GTK_DARK_GRAY };
+static GdkColor gtk_default_prelight_bg =    { 0, GTK_BLUE };
+static GdkColor gtk_default_selected_bg =    { 0, GTK_BLUE };
+static GdkColor gtk_default_insensitive_bg = { 0, GTK_GRAY };
 
 GtkStyle*
 gtk_style_copy (GtkStyle *style)
