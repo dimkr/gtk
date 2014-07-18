@@ -883,6 +883,7 @@ gtk_selection_request (GtkWidget *widget,
     {
       GtkSelectionData data;
       glong items;
+      glong bytes;
       
       data.selection = event->selection;
       data.target = info->conversions[i].target;
@@ -907,8 +908,16 @@ gtk_selection_request (GtkWidget *widget,
       
       g_return_val_if_fail ((data.format >= 8) && (data.format % 8 == 0), FALSE);
       
-      items = data.length / gtk_selection_bytes_per_item (data.format);
-      
+      bytes = gtk_selection_bytes_per_item (data.format);
+      if (0 == bytes)
+	{
+          items = 0;
+	}
+      else
+	{
+          items = data.length / bytes;
+	}
+
       if (data.length > GTK_SELECTION_MAX_SIZE)
 	{
 	  /* Sending via INCR */
